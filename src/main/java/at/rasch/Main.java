@@ -11,6 +11,7 @@ public class Main {
 
         System.out.println("Hello World");
 
+
         ElevatorRequest request1 = new ElevatorRequest(0, 10, Direction.UP);
         ElevatorRequest request2 = new ElevatorRequest(35, 0, Direction.DOWN);
         ElevatorRequest request3 = new ElevatorRequest(0, 15, Direction.UP);
