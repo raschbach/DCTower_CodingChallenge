@@ -2,56 +2,47 @@ package at.rasch.model;
 
 public class Elevator implements Runnable{
 
-    private int ID;
+    private int id;
     private int currentFloor;
     private ElevatorRequest request;
 
     @Override
     public void run() {
-        System.out.println("Aufzug: " + ID + " übernimmt die fahrt von " + request.getCurrentFloor() + " nach " + request.getDestinationFloor());
+        System.out.println("Aufzug: " + id + " übernimmt die fahrt von "
+                + request.getCurrentFloor() + " nach " + request.getDestinationFloor());
 
-        //Funktion überarbeiten
-        while(currentFloor != request.getCurrentFloor()){
-            if(currentFloor < request.getCurrentFloor()){
-                currentFloor++;
-            } else {
-                currentFloor--;
-            }
+        /*
+        Durch den Betrag wird berechnet wie viele Stockwerke der Aufzug zurück legen muss,
+        damit er den Request erledigt.
+         */
+        int floorsToTravel = Math.abs(currentFloor - request.getCurrentFloor()) +
+                Math.abs(Math.abs(request.getCurrentFloor() - request.getDestinationFloor()));
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            //System.out.println(ID + ": " + currentFloor + " : " + request.getCurrentFloor());
+        //Für jedes Stockwerk wartet der Aufzug 1 Sekunde
+        try {
+            Thread.sleep(floorsToTravel * 1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
-        while(currentFloor != request.getDestinationFloor()){
-            if(currentFloor < request.getDestinationFloor()){
-                currentFloor++;
-            } else {
-                currentFloor--;
-            }
+        //Ankunft beim DestinationFloor
+        currentFloor = request.getDestinationFloor();
 
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            //System.out.println(ID + ": " + currentFloor + " : " + request.getDestinationFloor());
-        }
+        System.out.println("Aufzug: " + id + " hat die Fahrt von " +
+                request.getCurrentFloor() + " nach " + request.getDestinationFloor() + " abgeschlossen.");
 
         request = null;
     }
 
     public Elevator(int id) {
-        ID = id;
+        this.id = id;
         currentFloor = 0;
         request = null;
     }
 
+    /*
+    Die Methode überprüft ob der Aufzug einen Request hat.
+     */
     public boolean isAvailable(){
         return request == null;
     }
@@ -65,15 +56,19 @@ public class Elevator implements Runnable{
     }
 
     public void setRequest(ElevatorRequest request) {
+        if(!this.isAvailable()){
+            throw new IllegalArgumentException("Der Aufzug: " + id + " bearbeitet bereits einen Request");
+        }
+
         this.request = request;
     }
 
     @Override
     public String toString() {
         if(request == null){
-            return "Der Aufzug wartet im " + currentFloor + ". Stock.";
+            return "Der Aufzug: " + id + " wartet im " + currentFloor + ". Stock.";
         }
-        return "Der Aufzug befindet sich im " + currentFloor +
-                ". Stock und ist auf dem Weg in den " + request.getDestinationFloor() + ". Stock.";
+        return "Der Aufzug: " + id + " bearbeitet den Request von " + request.getCurrentFloor() +
+                ". Stock in den " + request.getDestinationFloor() + ". Stock.";
     }
 }

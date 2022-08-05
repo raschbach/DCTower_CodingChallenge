@@ -7,41 +7,42 @@ import at.rasch.model.ElevatorRequest;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        System.out.println("Hello World");
+        //Erstellen eines Aufzugs-Manager mit 7 Aufzügen
+        ElevatorManager elevatorManager = new ElevatorManager(7);
 
+        //Testing:
+        elevatorManager.addRequest(new ElevatorRequest(0, 3, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 6, Direction.UP));
 
-        ElevatorRequest request1 = new ElevatorRequest(0, 10, Direction.UP);
-        ElevatorRequest request2 = new ElevatorRequest(35, 0, Direction.DOWN);
-        ElevatorRequest request3 = new ElevatorRequest(0, 15, Direction.UP);
-        ElevatorRequest request4 = new ElevatorRequest(30, 0, Direction.DOWN);
-        ElevatorRequest request5 = new ElevatorRequest(27, 0, Direction.DOWN);
-        ElevatorRequest request6 = new ElevatorRequest(0, 11, Direction.UP);
-        ElevatorRequest request7 = new ElevatorRequest(0, 12, Direction.UP);
-        ElevatorRequest request8 = new ElevatorRequest(0, 13, Direction.UP);
-        ElevatorRequest request9 = new ElevatorRequest(0, 14, Direction.UP);
-        ElevatorRequest request10 = new ElevatorRequest(0, 55, Direction.UP);
+        Thread.sleep(8000);
 
+        //Aufzug 2 nimmt sich den ersten Request, weil er näher ist.
+        elevatorManager.addRequest(new ElevatorRequest(8, 0, Direction.DOWN));
+        elevatorManager.addRequest(new ElevatorRequest(4, 0, Direction.DOWN));
 
-        ElevatorManager elevatorManager = new ElevatorManager();
-        elevatorManager.addRequest(request1);
-        elevatorManager.addRequest(request2);
-        elevatorManager.addRequest(request3);
-        elevatorManager.addRequest(request4);
-        elevatorManager.addRequest(request5);
-        elevatorManager.addRequest(request6);
-        elevatorManager.addRequest(request7);
-        elevatorManager.addRequest(request8);
-        elevatorManager.addRequest(request9);
-        elevatorManager.addRequest(request10);
+        //Alle Aufzüge sind wieder bei 0
+        Thread.sleep(11000);
+        elevatorManager.checkElevators();
 
-        //elevatorManager.checkElevators();
+        //7 Request
+        elevatorManager.addRequest(new ElevatorRequest(0, 8, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 10, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 12, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 14, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 16, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 18, Direction.UP));
+        elevatorManager.addRequest(new ElevatorRequest(0, 20, Direction.UP));
 
-        System.out.println("End");
+        //Alle Aufzüge sind belegt, daher wird gewartet bis der Erste frei ist.
+        elevatorManager.addRequest(new ElevatorRequest(12, 0, Direction.DOWN));
+        elevatorManager.addRequest(new ElevatorRequest(16, 0, Direction.DOWN));
+        elevatorManager.addRequest(new ElevatorRequest(20, 0, Direction.DOWN));
+        elevatorManager.addRequest(new ElevatorRequest(10, 0, Direction.DOWN));
+        elevatorManager.checkElevators();
 
         elevatorManager.shutdown();
-        //elevatorManager.checkElevators();
     }
 
 }
