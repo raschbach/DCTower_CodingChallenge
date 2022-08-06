@@ -8,28 +8,27 @@ public class Elevator implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Aufzug: " + id + " übernimmt die fahrt von "
-                + request.getCurrentFloor() + " nach " + request.getDestinationFloor());
+        System.out.println("Elevator: " + id + " takes the request from "
+                + request.getCurrentFloor() + " to " + request.getDestinationFloor());
 
         /*
-        Durch den Betrag wird berechnet wie viele Stockwerke der Aufzug zurück legen muss,
-        damit er den Request erledigt.
+        Calculation of the floors the elevator must travel to complete the request
          */
         int floorsToTravel = Math.abs(currentFloor - request.getCurrentFloor()) +
                              Math.abs(request.getCurrentFloor() - request.getDestinationFloor());
 
-        //Für jedes Stockwerk wartet der Aufzug 1 Sekunde
+        //For each floor the elevator waits 1 second
         try {
             Thread.sleep(floorsToTravel * 1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-        //Ankunft beim DestinationFloor
+        //Simulated arrival at the DestinationFloor
         currentFloor = request.getDestinationFloor();
 
-        System.out.println("Aufzug: " + id + " hat die Fahrt von " +
-                request.getCurrentFloor() + " nach " + request.getDestinationFloor() + " abgeschlossen.");
+        System.out.println("Elevator: " + id + " has completed the request from  " +
+                request.getCurrentFloor() + " to " + request.getDestinationFloor());
 
         request = null;
     }
@@ -41,7 +40,7 @@ public class Elevator implements Runnable{
     }
 
     /*
-    Die Methode überprüft ob der Aufzug einen Request hat.
+    The method checks if the elevator already has a request.
      */
     public boolean isAvailable(){
         return request == null;
@@ -57,7 +56,7 @@ public class Elevator implements Runnable{
 
     public void setRequest(ElevatorRequest request) {
         if(!this.isAvailable()){
-            throw new IllegalArgumentException("Der Aufzug: " + id + " bearbeitet bereits einen Request");
+            throw new IllegalArgumentException("Elevator: " + id + " is already processing a request.");
         }
 
         this.request = request;
@@ -66,9 +65,9 @@ public class Elevator implements Runnable{
     @Override
     public String toString() {
         if(request == null){
-            return "Der Aufzug: " + id + " wartet im " + currentFloor + ". Stock.";
+            return "Elevator: " + id + " waits on the " + currentFloor + ". floor.";
         }
-        return "Der Aufzug: " + id + " bearbeitet den Request von " + request.getCurrentFloor() +
-                ". Stock in den " + request.getDestinationFloor() + ". Stock.";
+        return "Elevator " + id + " processes the request from " + request.getCurrentFloor() +
+                ". floor to the " + request.getDestinationFloor() + ". floor.";
     }
 }

@@ -8,9 +8,9 @@ public class ElevatorRequest {
 
     public ElevatorRequest(int currentFloor, int destinationFloor, Direction direction) {
         if(currentFloor > 55 || currentFloor < 0){
-            throw new IllegalArgumentException(currentFloor + ": currentFloor is not a valid Floor");
+            throw new IllegalArgumentException(currentFloor + ": currentFloor is not a valid floor.");
         } else if(destinationFloor > 55 || destinationFloor < 0){
-            throw new IllegalArgumentException(destinationFloor + ": destinationFloor is not a valid Floor");
+            throw new IllegalArgumentException(destinationFloor + ": destinationFloor is not a valid floor.");
         }
         this.currentFloor = currentFloor;
         this.destinationFloor = destinationFloor;

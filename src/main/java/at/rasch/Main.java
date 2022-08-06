@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //Erstellen eines Aufzugs-Manager mit 7 Aufzügen
+        //Create an elevator manager with 7 elevators
         ElevatorManager elevatorManager = new ElevatorManager(7);
 
         //Testing:
@@ -17,11 +17,11 @@ public class Main {
 
         Thread.sleep(8000);
 
-        //Aufzug 2 nimmt sich den ersten Request, weil er näher ist.
+        //Elevator 2 takes the first request because it is closer.
         elevatorManager.addRequest(new ElevatorRequest(8, 0, Direction.DOWN));
         elevatorManager.addRequest(new ElevatorRequest(4, 0, Direction.DOWN));
 
-        //Alle Aufzüge sind wieder bei 0
+        //All elevators are back to 0
         Thread.sleep(11000);
         elevatorManager.checkElevators();
 
@@ -34,7 +34,7 @@ public class Main {
         elevatorManager.addRequest(new ElevatorRequest(0, 18, Direction.UP));
         elevatorManager.addRequest(new ElevatorRequest(0, 20, Direction.UP));
 
-        //Alle Aufzüge sind belegt, daher wird gewartet bis der Erste frei ist.
+        //All elevators are occupied, so we wait until the first one is free again.
         elevatorManager.addRequest(new ElevatorRequest(12, 0, Direction.DOWN));
         elevatorManager.addRequest(new ElevatorRequest(16, 0, Direction.DOWN));
         elevatorManager.addRequest(new ElevatorRequest(20, 0, Direction.DOWN));

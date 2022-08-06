@@ -1,7 +1,5 @@
 package at.rasch.model;
 
-import at.rasch.Main;
-
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -15,40 +13,35 @@ public class ElevatorManager {
     public ElevatorManager(int n) {
         elevators = new Elevator[n];
 
-        //Befüllen des Arrays mit Aufzügen 1 - n
+        //Filling the array with elevators 1 - n
         Arrays.setAll(elevators,e -> new Elevator(e+1));
 
-        //Erstellen eines FixedThreadPool mit der Größe n
+        //Create a FixedThreadPool with size n
         executorService = Executors.newFixedThreadPool(elevators.length);
     }
 
     /*
-    Es wird ein neuer Request aufgenommen und an einen Aufzug übergeben
+    A new request is added and passed to an elevator
      */
     public void addRequest(ElevatorRequest request) {
         Optional<Elevator> optionalElevator = findNearestElevator(request.getCurrentFloor());
 
-        //Sollte kein Aufzug verfügbar sein wird 3 Sekunden bis zum nächsten Versuch gewartet
+        //Try again when no elevator is available
         while(optionalElevator.isEmpty()){
-            try {
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            Thread.onSpinWait();
             optionalElevator = findNearestElevator(request.getCurrentFloor());
         }
 
-        //Request wird an den Aufzug übergeben
+        //Request is passed to the elevator
         Elevator nearestElevator = optionalElevator.get();
         nearestElevator.setRequest(request);
 
-        //Übergabe an den ThreadPool
+        //Submitting the elevator to the ThreadPool
         executorService.submit(nearestElevator);
     }
 
     /*
-    Ausgabe des Status für alle Aufzüge
+    Prints the status for all elevators
      */
     public void checkElevators(){
         for (Elevator e : elevators){
@@ -57,7 +50,7 @@ public class ElevatorManager {
     }
 
     /*
-    Sucht nach dem nähersten, freistehenden Aufzug
+    Searches for the closest freestanding elevator
      */
     private Optional<Elevator> findNearestElevator(int currentFloor){
         return Arrays.stream(elevators).filter(Elevator::isAvailable)
@@ -66,7 +59,7 @@ public class ElevatorManager {
     }
 
     /*
-    Abwarten bis jeder Request bearbeitet wurde und danach wird der ThreadPool beendet.
+    Waits until each request has been processed and then the ThreadPool is terminated.
      */
     public void shutdown(){
         executorService.shutdown();
