@@ -16,7 +16,7 @@ public class Elevator implements Runnable{
         damit er den Request erledigt.
          */
         int floorsToTravel = Math.abs(currentFloor - request.getCurrentFloor()) +
-                Math.abs(Math.abs(request.getCurrentFloor() - request.getDestinationFloor()));
+                             Math.abs(request.getCurrentFloor() - request.getDestinationFloor());
 
         //Für jedes Stockwerk wartet der Aufzug 1 Sekunde
         try {

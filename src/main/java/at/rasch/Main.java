@@ -1,7 +1,6 @@
 package at.rasch;
 
 import at.rasch.model.Direction;
-import at.rasch.model.Elevator;
 import at.rasch.model.ElevatorManager;
 import at.rasch.model.ElevatorRequest;
 

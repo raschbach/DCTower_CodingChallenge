@@ -1,7 +1,5 @@
 package at.rasch.model;
 
-import at.rasch.model.Direction;
-
 public class ElevatorRequest {
 
     private int currentFloor;
