@@ -2,9 +2,9 @@ package at.rasch.model;
 
 public class ElevatorRequest {
 
-    private int currentFloor;
-    private int destinationFloor;
-    private Direction direction;
+    private final int currentFloor;
+    private final int destinationFloor;
+    private final Direction direction;
 
     public ElevatorRequest(int currentFloor, int destinationFloor, Direction direction) {
         if(currentFloor > 55 || currentFloor < 0){

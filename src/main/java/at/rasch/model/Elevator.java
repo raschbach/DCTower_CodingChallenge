@@ -2,7 +2,7 @@ package at.rasch.model;
 
 public class Elevator implements Runnable{
 
-    private int id;
+    private final int id;
     private int currentFloor;
     private ElevatorRequest request;
 

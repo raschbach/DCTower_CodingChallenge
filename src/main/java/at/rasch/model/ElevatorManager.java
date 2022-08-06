@@ -7,8 +7,8 @@ import java.util.concurrent.Executors;
 
 public class ElevatorManager {
 
-    private Elevator[] elevators;
-    private ExecutorService executorService;
+    private final Elevator[] elevators;
+    private final ExecutorService executorService;
 
     public ElevatorManager(int n) {
         elevators = new Elevator[n];
