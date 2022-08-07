@@ -34,7 +34,7 @@ public class Main {
         elevatorManager.addRequest(new ElevatorRequest(0, 18, Direction.UP));
         elevatorManager.addRequest(new ElevatorRequest(0, 20, Direction.UP));
 
-        //All elevators are occupied, so we wait until the first one is free again.
+        //All elevators are occupied, so the program waits until the first one is free again.
         elevatorManager.addRequest(new ElevatorRequest(12, 0, Direction.DOWN));
         elevatorManager.addRequest(new ElevatorRequest(16, 0, Direction.DOWN));
         elevatorManager.addRequest(new ElevatorRequest(20, 0, Direction.DOWN));
